@@ -1,4 +1,4 @@
-public class ListaDinamica implements ListaOperacoes{
+public class ListaDinamica implements ListaOperacoes {
     No inicio;
 
     public ListaDinamica() {
@@ -8,12 +8,12 @@ public class ListaDinamica implements ListaOperacoes{
 
     public void adicionarElemento(String elemento) {
 
-        if(inicioEstaVazio()) {
+        if (inicioEstaVazio()) {
             this.inicio.setConteudo(elemento);
         } else {
             No aux = this.inicio;
             No novoNo = new No(elemento);
-            while(aux.getProx() != null) {
+            while (aux.getProx() != null) {
                 aux = aux.getProx();
             }
             aux.setProx(novoNo);
@@ -21,7 +21,7 @@ public class ListaDinamica implements ListaOperacoes{
     }
 
     public void exibir() {
-        if(inicioEstaVazio()) {
+        if (inicioEstaVazio()) {
             System.out.println("Não existem elementos na lista dinâmica.");
         } else {
             No aux = this.inicio;
@@ -30,7 +30,7 @@ public class ListaDinamica implements ListaOperacoes{
 //                aux = aux.getProx();
 //            }
 
-            while(aux != null) {
+            while (aux != null) {
                 System.out.println(aux.getConteudo());
                 aux = aux.getProx();
             }
@@ -39,7 +39,7 @@ public class ListaDinamica implements ListaOperacoes{
     }
 
     private boolean inicioEstaVazio() {
-        if(this.inicio.getConteudo() == null) {
+        if (this.inicio.getConteudo() == null) {
             return true;
         } else {
             return false;
@@ -47,24 +47,24 @@ public class ListaDinamica implements ListaOperacoes{
     }
 
     public void removerElemento(String elemento) {
-        if(inicioEstaVazio()) {
+        if (inicioEstaVazio()) {
             System.out.println("Não há elementos a serem removidos.");
         } else {
-            if(procurarElemento(elemento)) {
+            if (procurarElemento(elemento)) {
                 //remover primeiro elemento isolado
-                if(this.inicio.getProx() == null) {
+                if (this.inicio.getProx() == null) {
                     System.out.println("Elemento + " + elemento + " removido!");
                     this.inicio.setConteudo(null);
                 }
                 //remover qualquer nó conectado
-                else if(this.inicio.getProx() != null) {
+                else if (this.inicio.getProx() != null) {
                     No aux = this.inicio;
-                    while(aux != null) {
+                    while (aux != null) {
                         if (this.inicio.getConteudo().equals(elemento)) {
                             System.out.println("Elemento " + elemento + " removido!");
                             this.inicio = this.inicio.getProx();
                             return;
-                        } else if(aux.getProx().getConteudo().equals(elemento)) {
+                        } else if (aux.getProx().getConteudo().equals(elemento)) {
                             System.out.println("Elemento + " + elemento + " removido!");
                             aux.setProx(aux.getProx().getProx());
                             return;
@@ -77,12 +77,12 @@ public class ListaDinamica implements ListaOperacoes{
     }
 
     public boolean procurarElemento(String elemento) {
-        if(inicioEstaVazio()) {
+        if (inicioEstaVazio()) {
             System.out.println("Não há elementos a serem procurados.");
         } else {
             No aux = this.inicio;
-            while(aux != null) {
-                if(aux.getConteudo().equals(elemento)) {
+            while (aux != null) {
+                if (aux.getConteudo().equals(elemento)) {
                     System.out.println("Elemento " + elemento + " encontrado!");
                     return true;
                 }
@@ -95,7 +95,7 @@ public class ListaDinamica implements ListaOperacoes{
 
     /**
      * Remove TODAS as ocorrências de um determinado elemento da lista.
-     *
+     * <p>
      * Exemplo:
      * Lista: ["Ana", "Carlos", "Ana", "Pedro"]
      * removerTodas("Ana")
@@ -112,7 +112,7 @@ public class ListaDinamica implements ListaOperacoes{
 
     /**
      * Retorna a quantidade total de elementos atualmente armazenados na lista.
-     *
+     * <p>
      * Esse método deve considerar apenas os elementos válidos,
      * ignorando posições vazias no caso da lista baseada em vetor.
      *
@@ -121,6 +121,17 @@ public class ListaDinamica implements ListaOperacoes{
 
     @Override
     public int contar() {
+        if (inicioEstaVazio()) {
+            System.out.println("Não há elementos para serem contados!");
+        } else {
+            int contador = 0;
+            No aux = this.inicio;
+            while (aux != null) {
+                contador++;
+                aux = aux.getProx();
+            }
+            return contador;
+        }
         return 0;
     }
 
@@ -137,7 +148,34 @@ public class ListaDinamica implements ListaOperacoes{
 
     @Override
     public int adicionarVarios(String[] elementos) {
-        return 0;
+        int qtdElementosAdd = 0 ;
+
+        if(inicioEstaVazio()) {
+            inicio = new No(elementos [0]);
+            No aux = this.inicio;
+            qtdElementosAdd++;
+
+            for(int i = 1; i < elementos.length; i++) {
+                No novosNos = new No(elementos[i]);
+                aux.setProx(novosNos);
+                aux = novosNos;
+                qtdElementosAdd++;
+            }
+        }else {
+            No aux = this.inicio;
+            while (aux.getProx() != null) {
+                aux = aux.getProx();
+            }
+
+            for (int i = 0; i < elementos.length; i++) {
+                No novosNos = new No(elementos[i]);
+                aux.setProx(novosNos);
+                aux = novosNos;
+                qtdElementosAdd++;
+            }
+            return qtdElementosAdd;
+        }
+        return qtdElementosAdd;
     }
 
     /**
@@ -153,7 +191,26 @@ public class ListaDinamica implements ListaOperacoes{
 
     @Override
     public String obter(int indice) {
-        return "";
+        No aux = inicio;
+        if (inicioEstaVazio()){
+            System.out.println("A lista está vazia.");
+        } else {
+            if (indice < 0) {
+                return null;
+            }
+            for (int i = 0; i < indice; i++) {
+                if (aux == null) {
+                    System.out.println("Índice inválido.");
+                    return null;
+                } else {
+                    aux = aux.getProx();
+                }
+            }
+            if (aux == null) {
+                return null;
+            }
+        }
+        return aux.getConteudo();
     }
 
     /**
@@ -170,8 +227,16 @@ public class ListaDinamica implements ListaOperacoes{
 
     @Override
     public boolean inserir(int indice, String elemento) {
-        return false;
+      return false;
     }
+
+    //4 percorrer lista até posição
+    //5 se posição inválida → return false
+    //
+    //6 novo.prox = aux
+    //7 auxAnterior.prox = novo
+    //
+    //8 return true
 
     /**
      * Remove o elemento localizado em uma posição específica da lista.
@@ -186,8 +251,42 @@ public class ListaDinamica implements ListaOperacoes{
 
     @Override
     public String removerPorIndice(int indice) {
-        return "";
+        String elementoRemovido;
+        if (inicioEstaVazio()){
+            System.out.println("Não existem elementos para remover.");
+            return null;
+        } else {
+            No aux = inicio;
+            No auxAnterior = null;
+            if (indice < 0) {
+                return null;
+            }
+            for (int i = 0; i < indice; i++) {
+                auxAnterior = aux;
+                aux = aux.getProx();
+            }
+            if (aux == null) {
+                return null;
+            }
+            elementoRemovido = aux.getConteudo();
+            if (indice == 0) {
+                inicio = aux.getProx();
+            } else {
+                auxAnterior.setProx(aux.getProx());
+            }
+        }
+        return elementoRemovido;
     }
+
+    //
+    //6 guardar conteúdo removido
+    //
+    //7 se indice == 0
+    //      inicio = aux.prox
+    //   senão
+    //      anterior.prox = aux.prox
+    //
+    //8 retornar conteúdo removido
 
     /**
      * Remove todos os elementos da lista, deixando-a vazia.
@@ -199,7 +298,10 @@ public class ListaDinamica implements ListaOperacoes{
 
     @Override
     public void limpar() {
-        inicio = null;
+        if (this.inicio != null) {
+            this.inicio.setConteudo(null);
+            this.inicio.setProx(null);
+        }
     }
 
     /**
@@ -209,10 +311,31 @@ public class ListaDinamica implements ListaOperacoes{
      * @return Índice da última ocorrência ou -1 caso não exista.
      */
 
-    @Override
-    public int ultimoIndiceDe(String elemento) {
-        return 0;
-    }
+        @Override
+        public int ultimoIndiceDe(String elemento) {
+            int indiceDaUltimaOcorrencia = -1;
+            if(inicioEstaVazio()) {
+                System.out.println("Não foi possivel achar o elemento pois a lista está vazia!");
+                return -1;
+            }else {
+                No aux = this.inicio;
+                int contadorDeIncide = 0;
+
+                while (aux != null) {
+                    if (aux.getConteudo().equals(elemento)) {
+                        indiceDaUltimaOcorrencia = contadorDeIncide;
+                    }
+                    aux = aux.getProx();
+                    contadorDeIncide++;
+                }
+                    if (indiceDaUltimaOcorrencia == -1) {
+                        System.out.println("Elemento não encontrado!");
+                    } else {
+                        System.out.println("Indice da ultima ocorrencia " + indiceDaUltimaOcorrencia);
+                    }
+            }
+            return indiceDaUltimaOcorrencia ;
+        }
 
     /**
      * Conta quantas vezes um determinado elemento aparece na lista.
@@ -223,7 +346,19 @@ public class ListaDinamica implements ListaOperacoes{
 
     @Override
     public int contarOcorrencias(String elemento) {
-        return 0;
+        int contarOcorrencias = 0;
+        if (inicioEstaVazio()) {
+            System.out.println("A lista está vazia!");
+        } else {
+            No atual = this.inicio;
+            while (atual != null) {
+                if (atual.getConteudo().equals(elemento)) {
+                    contarOcorrencias++;
+                }
+                atual = atual.getProx();
+            }
+        }
+        return contarOcorrencias;
     }
 
     /**
@@ -241,6 +376,24 @@ public class ListaDinamica implements ListaOperacoes{
 
     @Override
     public int substituir(String antigo, String novo) {
-        return 0;
+        int quantidadeDeSubstituicoes = 0;
+
+        if(inicioEstaVazio()){
+            System.out.println("Não há o que substituir pois o inicio está vazio!");
+        }else{
+            No aux = this.inicio;
+            while(aux != null ) {
+                if (aux.getConteudo().equals(antigo)) {
+                    aux.setConteudo(novo);
+                    quantidadeDeSubstituicoes ++;
+            }
+                aux = aux.getProx();
+        }
+            if(quantidadeDeSubstituicoes == 0){
+                System.out.println("Não foi encontrado o valor " + antigo + "!!");
+            }
+    }
+        return quantidadeDeSubstituicoes;
     }
 }
+
