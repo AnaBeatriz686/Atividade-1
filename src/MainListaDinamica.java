@@ -28,5 +28,9 @@ public class MainListaDinamica {
         listaDinamica.adicionarVarios(alimentos);
         listaDinamica.exibir();
         listaDinamica.removerElemento("Alface");
+        listaDinamica.exibir();
+
+        listaDinamica.removerTodas("Abóbora");
+        listaDinamica.exibir();
     }
 }

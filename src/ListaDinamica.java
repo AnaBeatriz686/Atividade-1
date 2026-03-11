@@ -107,6 +107,21 @@ public class ListaDinamica implements ListaOperacoes {
 
     @Override
     public int removerTodas(String elemento) {
+        int contador = 0;
+
+        if (inicioEstaVazio()) {
+            System.out.println("Não há elementos na lista!");
+        } else {
+            /* buscar antes */
+            No aux = this.inicio;
+            if(procurarElemento((elemento))){
+                if (aux.equals(elemento)) { /*Para listas de 1 só nó */
+                    inicio.setConteudo(null);
+                } else {
+
+                }
+            }
+        }
         return 0;
     }
 
@@ -227,6 +242,17 @@ public class ListaDinamica implements ListaOperacoes {
 
     @Override
     public boolean inserir(int indice, String elemento) {
+        No novo = new No(elemento);
+        No aux  = this.inicio;
+        No auxAnterior = null;
+
+        for (int i = 0; i < indice; i++) {
+            if (aux == null) {
+                return false;
+            }
+        }
+
+        
       return false;
     }
 
@@ -235,7 +261,6 @@ public class ListaDinamica implements ListaOperacoes {
     //
     //6 novo.prox = aux
     //7 auxAnterior.prox = novo
-    //
     //8 return true
 
     /**
@@ -290,7 +315,6 @@ public class ListaDinamica implements ListaOperacoes {
 
     /**
      * Remove todos os elementos da lista, deixando-a vazia.
-     *
      * No caso da lista baseada em vetor, apenas o tamanho lógico
      * deve ser resetado. Na lista dinâmica, os nós devem ser
      * desconectados para permitir a coleta de lixo.
@@ -363,7 +387,6 @@ public class ListaDinamica implements ListaOperacoes {
 
     /**
      * Substitui todas as ocorrências de um elemento antigo por um novo elemento.
-     *
      * Exemplo:
      * Lista: ["Ana", "Carlos", "Ana"]
      * substituir("Ana", "Maria")
